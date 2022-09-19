@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<style>
+body > div {
+    border: 3px solid #fff;
+    padding: 20px;
+}
+body > div > div {
+    width: 500;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}
+h1 {
+	font-size: 12px;
+}
+h2 {
+	font-size: 10px;
+}
+</style>
+</head>
+<body>
+<div>
+	<div><canvas id="life" width="500" height="500"></canvas></div>
+	<div>
+		<h1>This is a Heading</h1>
+		<form ><input type="number" id="quantity" name="quantity" min="0.01" step="0.01" max="0.5"><input type="submit"></form>
+	</div>
+</div>
+<script>
+m=document.getElementById("life").getContext("2d")
+// set the composite property shape
+// m.globalCompositeOperation = 'lighter';
+
+draw=(x,y,c,s)=>{
+	m.fillStyle=c
+	m.fillRect(x,y,s,s)
+}
+
+particles=[]
+particle=(x,y,c, s, vx, vy)=>{
+	return { 
+		"m" : 1,
+		"x" : x, 
+		"y" : y, 
+		"vx": vx, 
+		"vy": vy, 
+		"color": c,
+		"size" : s
+	}
+}
+
+random=()=>{
+	return Math.random() * 400 + 50;
+}
+
+create=(number, color, vx, vy )=>{
+	group=[]
+	for( let i=0; i < number; i++) {
+		group.push(particle(random(), random(), color, 5, vx, vy ));
+		particles.push(group[i]);
+	}
+	return group;
+}
+rule=(particles1, particles2, g)=>{
+	for( i = 0; i < particles1.length; i++) {
+		fx=0
+		fy=0
+		a=particles1[i]
+		for( j=0; j < particles2.length; j++) {
+			b=particles2[j]
+			dx=a.x - b.x
+			dy=a.y - b.y
+			d=Math.sqrt(dx*dx + dy*dy)
+			if ( d > 0 && d < 250 ) {
+				F = g * 1/d
+				fx += ( F * dx )
+				fy += ( F * dy )
+			}
+		}
+		a.vx = ( a.vx + fx )*0.1
+		a.vy = ( a.vy + fy )*0.1
+		
+		a.x += a.vx
+		a.y += a.vy
+	}
+	for( i = 0; i < particles1.length; i++) {
+		a=particles1[i]
+		if ( a.x < 50  || a.x > 450 ) { 
+			a.vx *= -1;
+			console.log(a.color, " x dir", 
+				a.x.toFixed(2), a.y.toFixed(2), 
+				a.vx.toFixed(2), a.vy.toFixed(2));
+		}
+		if ( a.y < 50 || a.y > 450 ) { 
+			a.vy *= -1;
+			console.log(a.color, " y dir", 
+				a.x.toFixed(2), a.y.toFixed(2), 
+				a.vx.toFixed(2), a.vy.toFixed(2));
+		}
+	}
+}
+
+//yellow=create(200, "yellow")
+//green=create(200, "green")
+red=create(1, "red", 0.5, 0)
+//blue=create(200, "blue")
+
+update=()=>{
+//	rule(green, green, -0.01)
+	rule(red, red, -0.2)
+//	rule(red, yellow, -0.01)
+//	rule(yellow, red, 0.01)
+//	rule(red, green, -0.01)
+//	rule(green, red, -0.01)
+//	rule(blue, red, 0.001)
+//	rule(blue, green, 0.001)
+	m.clearRect(0,0,500,500)
+	draw(0,0,"black", 500);
+	for(i=0; i < particles.length; i++) {
+		draw(particles[i].x, particles[i].y, 
+			particles[i].color, particles[i].size)
+	}
+	requestAnimationFrame(update)
+}
+
+update();
+</script>
+</body>
+</html>
