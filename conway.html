@@ -9,39 +9,55 @@ body > div {
     padding: 20px;
 }
 body > div > div {
-    float: left;
     padding: 20px;
     border: 2px solid red;
-}
-h1 {
-	font-size: 12px;
+	float: left;
 }
 h2 {
 	font-size: 10px;
 }
+#life {
+	float: left;
+	border: #504e52;
+	border-style: dashed;
+	border-width: 5;
+}
+
+
 </style>
 </head>
-<body>
-<div>
-	<div><canvas id="life"></canvas></div>
+<body onload="update();">
+	<canvas id="life"></canvas>
 	<div>
-		<h1>This is a Heading</h1>
 		<form ><input type="number" id="quantity" name="quantity" min="0.01" step="0.01" max="0.5"><input type="submit"></form>
 	</div>
-</div>
 <script>
-width=document.documentElement.clientWidth
-height=document.documentElement.clientHeight
-
-m=document.getElementById("life").getContext("2d");
-
-// set the composite property shape
-// m.globalCompositeOperation = 'lighter';
-
 draw=(x,y,c,w,h)=>{
 	m.fillStyle=c
 	m.fillRect(x,y,w,h)
 }
+
+width=document.documentElement.clientWidth
+height=document.documentElement.clientHeight
+
+console.log( width );
+console.log( height );
+
+var canvas = document.getElementById("life");
+var m=canvas.getContext("2d");
+
+// Canvas Dimension
+function updateCanvasDimensions() {
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	// canvas.width = canvas.height = 500;
+}
+updateCanvasDimensions();
+
+// set the composite property shape
+// m.globalCompositeOperation = 'lighter';
+m.clearRect(0, 0, canvas.width, canvas.height);
+draw(0, 0, "black", canvas.width, canvas.height);
 
 var particles=[]
 particle=(x,y,c, s, vx, vy)=>{
@@ -56,7 +72,11 @@ particle=(x,y,c, s, vx, vy)=>{
 	}
 }
 
-random=(size)=>{
+random=()=>{
+	return  Math.floor(Math.random() * 400 + 50 );
+}
+
+random_conway=(size)=>{
 	return  Math.floor(Math.random() * size );
 }
 create=(number, color, vx, vy )=>{
@@ -68,18 +88,18 @@ create=(number, color, vx, vy )=>{
 	return group;
 }
 
-create_conway=(number, size)=>{
-	var group = new Array(size);
+create_conway=(number, width, height)=>{
+	var group = new Array(width);
 	
-	for( let i = 0; i < size; i++ ) {
-		group[i] = new Array(size);
-		for( let j = 0; j < size; j++ ) {
+	for( let i = 0; i < width; i++ ) {
+		group[i] = new Array(height);
+		for( let j = 0; j < height; j++ ) {
 			group[i][j] = 0;
 		}
 	}
 
 	for( let i=0; i < number; i++) {
-		group[random(size)][random(size)] = 1;
+		group[random_conway(width)][random_conway(height)] = 1;
 	}
 	return group;
 }
@@ -179,17 +199,17 @@ rule=(particles1, particles2, g)=>{
 
 //yellow=create(200, "yellow")
 //green=create(200, "green")
-var size=450
-var red=create_conway(101000, size)
+var red=create_conway(101000, width, height)
 //blue=create(200, "blue")
 
 var it = 0;
 
 update=()=>{
-	if ( it % 10 == 0 ) 
+	if ( it % 100 == 0 ) 
 		console.log("update " + it + ": particles=" + particles.length );
 	it++;
 //	rule(green, green, -0.01)
+	updateCanvasDimensions();
 
 	conway(red, "red");
 
@@ -210,7 +230,7 @@ update=()=>{
 	requestAnimationFrame(update)
 }
 
-update();
+//update();
 </script>
 </body>
 </html>

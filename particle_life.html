@@ -1,7 +1,5 @@
 <html>
-
 <head>
-
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<style>
@@ -105,6 +103,8 @@
 	</script>
 
 	<script>
+		const g = 6.67e-11
+
 		var requestId;
 		var timeoutID;
 		var show_black;
@@ -117,13 +117,12 @@
 		function updateCanvasDimensions() {
 			canvas.width = window.innerWidth * 0.9;
 			canvas.height = window.innerHeight * 0.9;
-			// canvas.width = canvas.height = 500;
 		}
 
 		const m = canvas.getContext("2d");
-		const draw_canvas = (x, y, c, s) => {
+		const draw_canvas = (x, y, c, w, h) => {
 			m.fillStyle = c;
-			m.fillRect(x, y, s, s);
+			m.fillRect(x, y, w, h);
 		};
 		const draw = (x, y, c, s) => {
 			if (c == "black" && show_black.checked)
@@ -138,7 +137,7 @@
 		var config = {}
 
 		const atom = (x, y, c, m) => {
-			return { x: x, y: y, vx: randomV(), vy: randomV(), color: c, mass: m, size: 3 };
+			return { x: x, y: y, vx: randomV(), vy: randomV(), color: c, mass: m, size: 3, u : g * m };
 		};
 
 		// Initiate Random locations for Atoms ( used when atoms created )
@@ -224,7 +223,6 @@
 						if (j !== i) {
 							const b = atoms[j];
 							// const g = RULES[a.color][b.color];
-							const g = -0.00001
 							
 							if (g !== undefined) {
 								const dx = a.x - b.x;
@@ -238,6 +236,10 @@
 								if (dy !== 0) {
 									// const d = dx * dx + dy * dy; // distance = d = sqrt(x^2 + y^2 ) So....
 									// F=GMm/R^2  R is the separation in meters (m) between the objects, as measured from their centers of mass
+									// F=ma
+									// ma=GMm/R^2
+									// a=GM/R^2
+									// 
 									const ay = g * b.mass / ( dy * dy )
 									fy += ay;
 								}
@@ -349,7 +351,7 @@
 
 						if (collide) {
 							b.mass += a.mass;
-							b.size = 2 * Math.sqrt(b.mass);
+							b.size = 4 * Math.sqrt(b.mass);
 							b.color = nextColor(b.mass)
 							b.vx = ( b.mass * b.vx + a.mass * a.vx) / ( b.mass + a.mass );
 							b.vy += ( b.mass * b.vy + a.mass * a.vy) / ( b.mass + a.mass );
@@ -468,7 +470,7 @@
 					applyRules_parallel();
 
 				m.clearRect(0, 0, canvas.width, canvas.height);
-				draw_canvas(0, 0, "black", Math.max(canvas.height, canvas.width));
+				draw_canvas(0, 0, "black", canvas.width, canvas.height);
 				let mass = 0
 				for (i = 0; i < atoms.length; i += 1) {
 					draw(atoms[i].x, atoms[i].y, atoms[i].color, atoms[i].size);
