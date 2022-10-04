@@ -2,15 +2,26 @@ table.system_address,
 table.system_address tr,
 table.system_address tr th,
 table.system_address tr td {
+    padding: 5px;
     border-width: 1px;
     border-style: solid;
     border-collapse: collapse;
 }
-
+.addr {
+    text-align: right;
+}
+.hex {
+    text-align: right;
+}
+.portal_code {
+    text-align: right;;
+}
 .portal_address {
+    text-align: right;
     padding: 0.0em;
     margin: ;
-    font-family: NMS-Glyphs-Tight;
+    /* font-family: NMS-Glyphs-Tight; */
+    font-family: NMS-Glyphs-Mono;
     font-size: 2.3em;
     line-height: 0.5em;
     top: 0.2em;
