@@ -40,6 +40,7 @@ function loaded() {
         tr.appendChild(td2)
 
         td3=document.createElement("td")
+        td3.setAttribute("class", "portal_address")
         td3.appendChild(document.createTextNode(portal_address))
         tr.appendChild(td3)
 

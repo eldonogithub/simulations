@@ -1,9 +1,18 @@
 table.system_address,
 table.system_address tr,
 table.system_address tr th,
-    table.system_address tr td {
+table.system_address tr td {
     border-width: 1px;
     border-style: solid;
     border-collapse: collapse;
 }
 
+.portal_address {
+    padding: 0.0em;
+    margin: ;
+    font-family: NMS-Glyphs-Tight;
+    font-size: 2.3em;
+    line-height: 0.5em;
+    top: 0.2em;
+    color: #0011ff;
+}
