@@ -1,0 +1,9 @@
+table.system_address,
+table.system_address tr,
+table.system_address tr th,
+    table.system_address tr td {
+    border-width: 1px;
+    border-style: solid;
+    border-collapse: collapse;
+}
+
