@@ -31,7 +31,7 @@ function renderTable(arr) {
     arr.sort(portal_sort)
 
     let table=document.createElement("table")
-    table.setAttribute("class", "system_address")
+    table.classList.add("system_address")
     let thead=document.createElement("thead")
     table.appendChild(thead)
     let thr=document.createElement("tr")
@@ -66,28 +66,43 @@ function renderTable(arr) {
     
     converted.sort(portal_sort)
 
+    var groups=[1,3,2,3,3];
+
     for (let i = 0; i < converted.length; i++) {
         let tr=document.createElement("tr")
         let td1=document.createElement("td")
-        td1.setAttribute("class", "addr")
+        let parity=i % 2 == 0 ? "even" : "odd";
+        tr.classList.add(parity);
+        td1.classList.add("addr")
         td1.appendChild(document.createTextNode(converted[i].addr))
         tr.appendChild(td1)
 
         let td2=document.createElement("td")
-        td2.setAttribute("class", "hex")
+        td2.classList.add("hex")
         td2.appendChild(document.createTextNode(converted[i].hex))
         tr.appendChild(td2)
 
+        let docFrag=document.createDocumentFragment()
+        let start = 4;
+        for( const element of groups ) {
+            let span=document.createElement("span")
+            let text=document.createTextNode(converted[i].portal_address.substr(start,element))
+            span.appendChild(text)
+            start = start + element
+            docFrag.appendChild(span)
+        }
+
         let td3=document.createElement("td")
-        td3.setAttribute("class", "portal_code")
-        let c= String.fromCharCode(converted[i].portal_address.charCodeAt(4) - 1);
-        converted[i].portal_address=converted[i].portal_address.substr(0,3) + c + converted[i].portal_address.substr(5)
-        td3.appendChild(document.createTextNode(converted[i].portal_address))
+        td3.classList.add("portal_code")
+        // let c= String.fromCharCode(converted[i].portal_address.charCodeAt(4) - 1);
+        // converted[i].portal_address=converted[i].portal_address.substr(0,3) + c + converted[i].portal_address.substr(5)
+        td3.appendChild(docFrag.cloneNode(true))
         tr.appendChild(td3)
 
         let td4=document.createElement("td")
-        td4.setAttribute("class", "portal_address")
-        td4.appendChild(document.createTextNode(converted[i].portal_address.substr(-12)))
+        td4.classList.add("portal_address")
+
+        td4.appendChild(docFrag)
         tr.appendChild(td4)
 
         tbody.appendChild(tr)

@@ -1,3 +1,27 @@
+@font-face {
+    font-family: 'Space Mono';
+    src: url('SpaceMono-Regular.ttf') format('truetype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Space Mono';
+    src: url('SpaceMono-Bold.ttf') format('truetype');
+    font-display: swap;
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'Space Mono';
+    src: url('SpaceMono-Italic.ttf') format('truetype');
+    font-display: swap;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Space Mono';
+    src: url('SpaceMono-BoldItalic.ttf') format('truetype');
+    font-display: swap;
+    font-weight: 700;
+    font-style: italic;
+}
 table.system_address,
 table.system_address tr,
 table.system_address tr th,
@@ -6,7 +30,21 @@ table.system_address tr td {
     border-width: 1px;
     border-style: solid;
     border-collapse: collapse;
+    font-family: 'Space Mono', monospace;
 }
+table.system_address thead tr th {
+    font-family: 'Times New Roman', Times, serif;
+}
+table.system_address thead tr {
+    background-color: grey;
+}
+table.system_address tbody tr.odd {
+    background-color: lightgray;
+}
+table.system_address tbody tr.even {
+    background-color: whitesmoke;
+}
+
 .addr {
     text-align: right;
 }
@@ -16,14 +54,35 @@ table.system_address tr td {
 .portal_code {
     text-align: right;;
 }
-.portal_address {
+table.system_address tr td.portal_address {
     text-align: right;
-    padding: 0.0em;
-    margin: ;
+    padding: 0;
     /* font-family: NMS-Glyphs-Tight; */
     font-family: NMS-Glyphs-Mono;
-    font-size: 2.3em;
-    line-height: 0.5em;
+    font-size: 20px;
+    line-height: normal;
     top: 0.2em;
     color: #0011ff;
+}
+table.system_address tr td.portal_code span,
+table.system_address tr td.portal_address span {
+    color: red;
+}
+
+table.system_address tr td.portal_code span + span,
+table.system_address tr td.portal_address span + span {
+    color: green;
+}
+
+table.system_address tr td.portal_code span + span + span,
+table.system_address tr td.portal_address span + span + span {
+    color: blue;
+}
+table.system_address tr td.portal_code span + span + span + span,
+table.system_address tr td.portal_address span + span + span + span {
+    color: coral;
+}
+table.system_address tr td.portal_code span + span + span + span + span,
+table.system_address tr td.portal_address span + span + span + span + span {
+    color: brown;
 }
