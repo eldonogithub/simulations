@@ -3,18 +3,21 @@
     src: url('SpaceMono-Regular.ttf') format('truetype');
     font-display: swap;
 }
+
 @font-face {
     font-family: 'Space Mono';
     src: url('SpaceMono-Bold.ttf') format('truetype');
     font-display: swap;
     font-weight: 700;
 }
+
 @font-face {
     font-family: 'Space Mono';
     src: url('SpaceMono-Italic.ttf') format('truetype');
     font-display: swap;
     font-style: italic;
 }
+
 @font-face {
     font-family: 'Space Mono';
     src: url('SpaceMono-BoldItalic.ttf') format('truetype');
@@ -22,6 +25,36 @@
     font-weight: 700;
     font-style: italic;
 }
+
+@font-face {
+    font-family: 'NMS-Glyphs-Mono';
+    src: local('NMS-Glyphs-Mono'), local('NMS-Glyphs-Mono'), url(NMS-Glyphs-Mono.ttf) format('truetype')
+}
+
+@font-face {
+    font-family: 'NMS-Glyphs-Tight';
+    src: local('NMS-Glyphs-Tight'), local('NMS-Glyphs-Tight'), url(NMS-Glyphs-Tight.ttf) format('truetype')
+}
+
+@font-face {
+    font-family: 'Geosanslight-NMS';
+    src: local('Geosanslight-NMS'), url(geonms-webfont.ttf) format('truetype')
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Raleway'), local('Raleway-Regular'), url(/Raleway-Regular.ttf) format('truetype')
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Raleway Bold'), local('Raleway-Bold'), url(/Raleway-Bold.ttf) format('truetype')
+}
+
 table.system_address,
 table.system_address tr,
 table.system_address tr th,
@@ -32,15 +65,19 @@ table.system_address tr td {
     border-collapse: collapse;
     font-family: 'Space Mono', monospace;
 }
+
 table.system_address thead tr th {
     font-family: 'Times New Roman', Times, serif;
 }
+
 table.system_address thead tr {
     background-color: grey;
 }
+
 table.system_address tbody tr.odd {
     background-color: lightgray;
 }
+
 table.system_address tbody tr.even {
     background-color: whitesmoke;
 }
@@ -48,41 +85,49 @@ table.system_address tbody tr.even {
 .addr {
     text-align: right;
 }
+
 .hex {
     text-align: right;
 }
+
 .portal_code {
-    text-align: right;;
+    text-align: right;
+    ;
 }
+
 table.system_address tr td.portal_address {
     text-align: right;
     padding: 0;
     /* font-family: NMS-Glyphs-Tight; */
     font-family: NMS-Glyphs-Mono;
-    font-size: 20px;
+    font-size: 24px;
+    font-weight: 500;
     line-height: normal;
     top: 0.2em;
     color: #0011ff;
 }
+
 table.system_address tr td.portal_code span,
 table.system_address tr td.portal_address span {
-    color: red;
+    color: black;
 }
 
-table.system_address tr td.portal_code span + span,
-table.system_address tr td.portal_address span + span {
-    color: green;
+table.system_address tr td.portal_code span+span,
+table.system_address tr td.portal_address span+span {
+    color: black;
 }
 
-table.system_address tr td.portal_code span + span + span,
-table.system_address tr td.portal_address span + span + span {
-    color: blue;
+table.system_address tr td.portal_code span+span+span,
+table.system_address tr td.portal_address span+span+span {
+    color: black;
 }
-table.system_address tr td.portal_code span + span + span + span,
-table.system_address tr td.portal_address span + span + span + span {
-    color: coral;
+
+table.system_address tr td.portal_code span+span+span+span,
+table.system_address tr td.portal_address span+span+span+span {
+    color: black;
 }
-table.system_address tr td.portal_code span + span + span + span + span,
-table.system_address tr td.portal_address span + span + span + span + span {
-    color: brown;
+
+table.system_address tr td.portal_code span+span+span+span+span,
+table.system_address tr td.portal_address span+span+span+span+span {
+    color: black;
 }

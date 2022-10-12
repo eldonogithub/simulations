@@ -1,0 +1,25 @@
+Does anyone know how to convert the Visited System addresses in the save file correctly? The problem I am having is that I am getting it mostly right, but the planet code is wrong.
+
+I was trying to remember which planet I was on when I got a hauler that I liked so that I could buy it again for another game save that I was playing. 
+I figured out that the game save had all the visited systems stored in decimal integer format like so:
+
+				"VisitedSystems": [
+					334347860181407
+				],
+
+From the data above, I converted it to hex: 0x000130166D70019F
+I noticed that the format of the number had Y and Z swapped from the Portal Address described  here: https://nomanssky.fandom.com/wiki/Galactic_Coordinates 
+There are multiple different formats for coordinates:
+	Visited System Code format: Planet?, Solar System Index,	Z,	Y,	X               # Planet can't be right here, there must be another fudge factor I don't know about.
+	Portal String Format: Planet ,Solar System Index,	Y,	Z,	X
+	Signal Booster String Format: Scanner ID,	X,	Y,	Z,	Solar System Index
+
+I translated 0x000130166D70019F to: 0x3016006D719F and dropped the leading 1 ( not sure what it is for).
+
+The above portal address converts to: http://nmsportals.github.io/#3016006D719F
+However, the problem I have is that the address is the correct system, but not the right planet. When I take a screenshot with the address shown from the same planet, it isn't the 
+address. When I teleport to http://nmsportals.github.io/#3016006D719F, it is the wrong planet. The correct planet address is 0x5016006D719F. 
+http://nmsportals.github.io/#5016006D719F It isn't consistent either, sometimes the planet number is right, sometimes it is off by 1, and then sometimes like 
+in the above example, it is off by 2.
+
+
