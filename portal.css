@@ -107,27 +107,27 @@ table.system_address tr td.portal_address {
     color: #0011ff;
 }
 
-table.system_address tr td.portal_code span,
-table.system_address tr td.portal_address span {
+table.system_address tr td.portal_code span.planetNumber,
+table.system_address tr td.portal_address span.planetNumber {
     color: black;
 }
 
-table.system_address tr td.portal_code span+span,
-table.system_address tr td.portal_address span+span {
+table.system_address tr td.portal_code span.systemIndex,
+table.system_address tr td.portal_address span.systemIndex {
     color: black;
 }
 
-table.system_address tr td.portal_code span+span+span,
-table.system_address tr td.portal_address span+span+span {
+table.system_address tr td.portal_code span.yDir,
+table.system_address tr td.portal_address span.yDir {
     color: black;
 }
 
-table.system_address tr td.portal_code span+span+span+span,
-table.system_address tr td.portal_address span+span+span+span {
+table.system_address tr td.portal_code span.zDir,
+table.system_address tr td.portal_address span.zDir {
     color: black;
 }
 
-table.system_address tr td.portal_code span+span+span+span+span,
-table.system_address tr td.portal_address span+span+span+span+span {
+table.system_address tr td.portal_code span.xDir,
+table.system_address tr td.portal_address span.xDir {
     color: black;
 }

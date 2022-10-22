@@ -20,6 +20,7 @@ function loaded() {
         let arr = data[name].VisitedSystems
         let h2 = document.createElement("h2")
         h2.appendChild(document.createTextNode(name))
+        // 
         let table = renderTable(arr)
         docFrag.appendChild(h2)
         docFrag.appendChild(table)
@@ -28,8 +29,7 @@ function loaded() {
 }
 
 function renderTable(arr) {
-    arr.sort(portal_sort)
-
+    arr.sort(function(a,b){return a - b;})
     let table = document.createElement("table")
     table.classList.add("system_address")
     let thead = document.createElement("thead")
@@ -64,18 +64,38 @@ function renderTable(arr) {
     table.appendChild(tbody)
     var converted = []
     for (let i = 0; i < arr.length; i++) {
-        let hex = arr[i].toString(16).toUpperCase();
-        hex = hex.padStart(16, '0')
-        const len = hex.length
-        let portal_address = hex.substring(len - 11, 0) + hex.substring(len - 8, len - 11) + hex.substring(len - 3, len - 5) + hex.substring(len - 5, len - 8) + hex.substring(len, len - 3)
-        converted.push({ "addr": arr[i], "hex": hex, "portal_address": portal_address })
     }
 
-    converted.sort(portal_sort)
+    // number groups
+    let groups = [
+        { "size" : 1, "class" : "planetNumber"}, 
+        { "size" : 3, "class" : "systemIndex" },
+        { "size" : 2, "class" : "yDir" },
+        { "size" : 3, "class" : "zDir" },
+        { "size" : 3, "class" : "xDir" }
+    ];
 
-    var groups = [1, 3, 2, 3, 3];
+    function translateNumber(addr) {
+        let hex = addr.toString(16).toUpperCase();
+        hex = hex.padStart(16, '0')
+        const len = hex.length
 
-    for (let i = 0; i < converted.length; i++) {
+        let planetNumber= hex.substring(len - 11, 0)       // planet number
+        let systemIndex = hex.substring(len - 8, len - 11) // system id
+        let y=hex.substring(len - 3, len - 5)              // Y
+        let z=hex.substring(len - 5, len - 8)              // Z
+        let x=hex.substring(len, len - 3)                  // X
+
+        let portal_address = planetNumber + systemIndex + y + z + x
+
+        converted={ "addr": addr, "hex": hex, "portal_address": portal_address }
+
+        return converted;
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        converted=translateNumber(arr[i])
+
         let tr = document.createElement("tr")
         let parity = i % 2 == 0 ? "even" : "odd";
         tr.classList.add(parity);
@@ -84,40 +104,49 @@ function renderTable(arr) {
         td.textContent = i + 1
         tr.appendChild(td)
 
+        // display the numeric visited system code
         let td1 = document.createElement("td")
         td1.classList.add("addr")
-        td1.appendChild(document.createTextNode(converted[i].addr))
+        td1.appendChild(document.createTextNode(converted.addr))
         tr.appendChild(td1)
 
+        // Convert to Hexidecimal
         let td2 = document.createElement("td")
         td2.classList.add("hex")
-        td2.appendChild(document.createTextNode(converted[i].hex))
+        td2.appendChild(document.createTextNode(converted.hex))
         tr.appendChild(td2)
 
+        // Create fragment to duplicate DOM content
         let docFrag = document.createDocumentFragment()
         let start = 4;
+
+        // Convert the hex into span groups
         let portalstring=""
-        for (const size of groups) {
+        for (let i = 0; i < groups.length; i++ ) {
             let span = document.createElement("span")
-            let value=converted[i].portal_address.substr(start, size)
+            let value=converted.portal_address.substr(start, groups[i]["size"])
             portalstring = portalstring + value
             let text = document.createTextNode(value)
             span.appendChild(text)
-            start = start + size
+            span.classList.add(groups[i]["class"])
+            start = start + groups[i]["size"]
             docFrag.appendChild(span)
         }
 
+        // put the string in a regular hex format
         let td3 = document.createElement("td")
         td3.classList.add("portal_code")
         td3.appendChild(docFrag.cloneNode(true))
         tr.appendChild(td3)
 
+        // also make a copy for rengdering in the NMS Glyph font
         let td4 = document.createElement("td")
         td4.classList.add("portal_address")
 
         td4.appendChild(docFrag)
         tr.appendChild(td4)
 
+        // convert to coordinate data string
         let planet = parseInt(portalstring.substr(0, 1), 16)
         let ssi = parseInt(portalstring.substr(1, 3), 16)
         let y = (parseInt(portalstring.substr(4, 2), 16) + 0x7F) % 0x100
