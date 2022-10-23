@@ -16,10 +16,11 @@ function printObjectData(obj, n = 0) {
     }
 }
 
-addrRegex = /address/i;
+// addrRegex = /address|visitedsystems/i;
+addrRegex = /visitedsystems/i;
 
 function findAddresses(obj, n = 0, prefix = [], inAddr=[]) {
-    console.log(`n=${n}`)
+    address=[]
     let i = 0;
     var properties = Object.keys(obj);
 
@@ -29,7 +30,6 @@ function findAddresses(obj, n = 0, prefix = [], inAddr=[]) {
 
     for (i = 0; i < properties.length; i++) {
         const key = properties[i];
-        console.log(`key=${key}`)
         value = obj[key]
         prefix.push(key)
         state = inAddr.length>0 ? inAddr[inAddr.length-1] : 0;
@@ -41,9 +41,7 @@ function findAddresses(obj, n = 0, prefix = [], inAddr=[]) {
         else if (state) {
             ctx = ""
             prefix.forEach(function itemToString(value, index, arr) {
-                console.log(`ctx=${ctx}, property=${value}`)
-
-                if (Number.isInteger(value)) {
+                if (Number.isInteger(parseInt(value))) {
                     ctx += "[" + value + "]";
                     return;
                 }
@@ -54,7 +52,8 @@ function findAddresses(obj, n = 0, prefix = [], inAddr=[]) {
                     ctx += `.${value}`;
             }
             )
-            console.log(ctx + "(" + typeof (value) + ") : " + value);
+            findAddresses.push(value);
+
         }
         inAddr.pop()
         prefix.pop()
@@ -75,7 +74,13 @@ function readJson(file, processFile) {
         console.log("loaded file")
         processFile(evt.target.result);
     };
-    reader.readAsText(file.files[0]);
+    if ( file.files.length == 0 ) {
+        console.log("no file specified")
+        return;
+    }
+    for( let i = 0; i < file.files.length; i++) {
+        reader.readAsText(file.files[i]);
+    }
 }
 
 function loadFile() {
@@ -90,13 +95,26 @@ function loadFile() {
 function handleGoButton(event) {
     console.log("handlGoButton")
     data = {
-        "address": [1, 2, 3, 4, 5]
+        "visitedsystems": [1, 2, 3, 4, 5]
     }
     findAddresses(data);
 }
 
-function loaded() {
+function loadFileButton(event) {
+    inputFile=document.getElementById("json-file-input")
+    inputFile.click()
+}
+
+function updateInputFile(event) {
+
+}
+
+function import_save() {
+    console.log("import_save")
     goButton = document.getElementById("test-button")
     goButton.addEventListener("mouseup", handleGoButton)
-    console.log("loaded")
+    fileButton = document.getElementById("select-file-button")
+    fileButton.addEventListener('click', loadFileButton)
+    inputFile=document.getElementById("json-file-input")
+    inputFile.addEventListener('change', updateInputFile);
 }

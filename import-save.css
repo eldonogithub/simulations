@@ -4,23 +4,43 @@
     width: 350px;
     position: relative;
 }
+
 .form-header,
 .form-spacer,
 .form-footer {
     background-color: grey;
 }
+
 .form-whitespace {
     background-color: white;
 }
 
-.form-header span,
-.form-spacer span,
-.form-footer span {
+.form-whitespace {
     font-weight: bold;
     color: white;
-    font-size: 1.5em;
+    font-size: 1em;
+}
+
+.form-header,
+.form-spacer,
+.form-footer {
+    font-weight: bold;
+    color: white;
+    font-size: 2em;
 }
 
 .form-submit {
     text-align: right;
+}
+
+label {
+    white-space: nowrap;
+}
+
+td {
+    display: inline-block;
+}
+
+input[type="file"] {
+    display: none;
 }

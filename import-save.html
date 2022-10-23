@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Load Save</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='import-save.css'>
+
+    <script src='import-save.js'></script>
+</head>
+
+<body onload="import_save()">
+    <form class="form1" onsubmit="return loadFile()">
+        <div class="form-header"><span>Choose a File to Process</span></div>
+        <div class="form-whitespace">&nbsp;</div>
+        <div class="form-body">
+            <table>
+                <tr>
+                    <td>
+                        <label for="test-button">Initiate a Test:</label>
+                        <input type="button" id="test-button" value="Test"><br>
+                    </td>
+                    <td>
+                        <label for="select-file-button">Choose a File:</label>
+                        <button type="button" id="select-file-button">Select File</button>
+                        <input type="file" id="json-file-input">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="form-whitespace">&nbsp;</div>
+        <div class="form-spacer">&nbsp;</div>
+        <div class="form-submit">
+            <input type="submit">
+        </div>
+    </form>
+</body>
+
+</html>

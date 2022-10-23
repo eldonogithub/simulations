@@ -12,7 +12,7 @@ function portal_sort(a, b) {
     }
 }
 
-function loaded() {
+function portal_loaded() {
     let headers = document.getElementsByTagName("h1")
     let h1 = headers.item(0)
     let docFrag = document.createDocumentFragment()
