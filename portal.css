@@ -82,6 +82,22 @@ table.system_address tbody tr.even {
     background-color: whitesmoke;
 }
 
+table.system_address tbody tr.odd.overflow {
+    background-color: palevioletred;
+}
+
+table.system_address tbody tr.even.overflow {
+    background-color: pink;
+}
+
+table.system_address tbody tr.odd.zero {
+    background-color: aqua;
+}
+
+table.system_address tbody tr.even.zero {
+    background-color: cornflowerblue;
+}
+D
 .addr {
     text-align: right;
 }
@@ -92,7 +108,9 @@ table.system_address tbody tr.even {
 
 .portal_code {
     text-align: right;
-    ;
+}
+.galaxy {
+    text-align: right;
 }
 
 table.system_address tr td.portal_address {
@@ -131,3 +149,4 @@ table.system_address tr td.portal_code span.xDir,
 table.system_address tr td.portal_address span.xDir {
     color: black;
 }
+
