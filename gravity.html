@@ -1,0 +1,55 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel='stylesheet' type='text/css' media='screen' href='gravity.css'>
+    <script src='gravity.js'></script>
+</head>
+
+<body>
+	<div id="div_canvas">
+		<canvas id="canvas"></canvas>
+	</div>
+	<script>
+	</script>
+	<div id="div_form1">
+		<form id="form1" onsubmit="return start();">
+			<span class="span-stat">Total Atoms:<div id="total_atoms"></div></span><br>
+			<span class="span-stat">Total Mass:<div id="total_mass"></div></span><br>
+			<input id="velocity" type="number" min="1" max="20" step="1" value="2">
+			<label for="velocity">Velocity</label><br>
+
+			<input id="atoms" type="number" min="10" max="1000" step="10" value="100">
+			<label for="atoms">Atoms</label><br>
+			<input type="number" min="0.01" max="2" id="factor" step="0.01" value="1">
+			<label for="factor">Factor</label><br>
+
+			<input type="number" min="1" max="60" id="fps" step="1" value="10">
+			<label for="fps">FPS</label><br>
+			<br>
+			<input id="original" type="radio" name="rule" value="original">
+			<label for="original">Sequential</label><br>
+			<input id="new" type="radio" name="rule" value="new" checked>
+			<label for="new">Parallel</label><br>
+			<br>
+			<input id="yellow" type="checkbox" checked>
+			<label for="yellow">Yellow</label><br>
+			<input id="red" type="checkbox">
+			<label for="red">Red</label><br>
+			<input id="green" type="checkbox">
+			<label for="green">Green</label><br>
+			<input id="blue" type="checkbox">
+			<label for="blue">Blue</label><br>
+
+			<input id="black" type="checkbox">
+			<label for="black">Black</label><br>
+
+			<input id="showblack" type="checkbox">
+			<label for="showblack">Show Black</label><br>
+
+			<input id="submit" type="submit">
+		</form>
+	</div>
+</body>
+
+</html>

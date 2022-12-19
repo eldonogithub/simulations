@@ -13,9 +13,15 @@ function portal_sort(a, b) {
 }
 
 function portal_loaded() {
-    let headers = document.getElementsByTagName("h1")
-    let h1 = headers.item(0)
+    let form1=document.getElementById("signal-booster-form")
+    form1.addEventListener("submit", submitForm )
+
+    let form2=document.getElementById("visited-system-form")
+    form2.addEventListener("submit", submitVisitedSystemForm )
+
+    let h1 = document.getElementById("portal-coordinates")
     let docFrag = document.createDocumentFragment()
+    return;
     for (let name in data) {
         let arr = data[name].VisitedSystems
         let h2 = document.createElement("h2")
@@ -62,9 +68,6 @@ function renderTable(arr) {
 
     let tbody = document.createElement("tbody")
     table.appendChild(tbody)
-    var converted = []
-    for (let i = 0; i < arr.length; i++) {
-    }
 
     // number groups
     let groups = [
@@ -82,19 +85,19 @@ function renderTable(arr) {
 
         let planetNumber= hex.substring(len - 11, 0)       // planet number
         let systemIndex = hex.substring(len - 8, len - 11) // system id
-        let y=hex.substring(len - 3, len - 5)              // Y
         let z=hex.substring(len - 5, len - 8)              // Z
+        let y=hex.substring(len - 3, len - 5)              // Y
         let x=hex.substring(len, len - 3)                  // X
 
         let portal_address = planetNumber + systemIndex + y + z + x
 
-        converted={ "addr": addr, "hex": hex, "portal_address": portal_address }
+        let converted={ "addr": addr, "hex": hex, "portal_address": portal_address }
 
         return converted;
     }
 
     for (let i = 0; i < arr.length; i++) {
-        converted=translateNumber(arr[i])
+        let converted=translateNumber(arr[i])
 
         let tr = document.createElement("tr")
         let parity = i % 2 == 0 ? "even" : "odd";
@@ -147,8 +150,16 @@ function renderTable(arr) {
         tr.appendChild(td4)
 
         // convert to coordinate data string
+        /*
+            Var name:	              Scanner ID	X	    Y	    Z	    Solar System Index
+            Substring	              HUKYA	        046A	0081	0D6D	0038
+            range for game values	  (4-5 letters)	0..FFF	0..FF	0..FFF	1..2FF
+        */
         let planet = parseInt(portalstring.substr(0, 1), 16)
         let ssi = parseInt(portalstring.substr(1, 3), 16)
+        if ( ssi == 0 || ssi > 0x2FF ) {
+            tr.classList.add("invalid")
+        }
         let y = (parseInt(portalstring.substr(4, 2), 16) + 0x7F) % 0x100
         let z = (parseInt(portalstring.substr(6, 3), 16) + 0x7FF) % 0x1000
         let x = (parseInt(portalstring.substr(9, 3), 16) + 0x7FF) % 0x1000
@@ -163,4 +174,117 @@ function renderTable(arr) {
         tbody.appendChild(tr)
     }
     return table;
+}
+let conversions=[]
+
+function convert(event) {
+
+    let portalInput=document.getElementById("signal-booster-string")
+
+    let portalString=portalInput.value.toUpperCase()
+    let portalStripped=portalString.replace(/[^0-9A-F]/g, '').slice(-16)
+    console.log("input string=" + portalInput.value)
+    console.log("portal string stripped=" + portalStripped)
+    let portalStringPadded=portalStripped.padStart(16, '0')
+
+    let planet = 0 // planet isn't provided with Signal Booster String
+
+    let ssi = portalStringPadded.slice(-3)
+    let ssiNumber = parseInt(ssi, 16)
+    if ( ssiNumber == 0 || ssiNumber > 0x2FF ) {
+        console.log(`SSI is invalid: ${ssi}`)
+        return
+    }
+    let offsetXZ = 0x1000 - 0x7FF
+    let offsetY = 0x100 - 0x7F
+
+
+    let z1 = portalStringPadded.slice(-8, -4)
+    let z2 = ((parseInt(z1, 16) + offsetXZ ) % 0x1000).toString(16).toUpperCase().padStart(3, '0')
+
+    let y1 = portalStringPadded.slice(-11, -8)
+    let y2 = ((parseInt(y1, 16) + offsetY ) % 0x100).toString(16).toUpperCase().padStart(2, '0')
+
+    let x1 = portalStringPadded.slice(0, 4)
+    let x2 = ((parseInt(x1, 16) + offsetXZ ) % 0x1000).toString(16).toUpperCase().padStart(3, '0')
+
+    console.log(`original  planet=${planet}, ssi=${ssi}, y=${y1}, z=${z1}, x=${x1}`)
+    console.log(`reordered planet=${planet}, ssi=${ssi}, z=${z2}, y=${y2}, x=${x2}`)
+
+    let decodedString=`${planet}${ssi}${z2}${y2}${x2}`
+    let decodedCode=parseInt(decodedString, 16)
+
+    console.log(`decodedString=${decodedString}, decodedCode=${decodedCode}`)
+
+    conversions.push(decodedCode)
+
+    let div = document.createElement("div", )
+    div.id='results'
+    let results = document.getElementById("results")
+
+    let h2 = document.createElement("h2")
+    h2.appendChild(document.createTextNode("Results"))
+    // 
+    let table = renderTable(conversions)
+    div.appendChild(h2)
+    div.appendChild(table)
+    if ( results == null  ) {
+        event.target.appendChild(div)
+    }
+    else {
+        results.replaceWith(div)
+    }
+}
+
+function submitForm(event) {
+    try {
+        convert(event);
+    }
+    catch (error) {
+        console.log(error);
+    }
+    event.preventDefault();
+    return false;
+}
+
+let numbers=[]
+function convertVisitedSystemNumber(event) {
+    let visitedSystem=document.getElementById("visited-system-string")
+
+    let visitedSystemString=visitedSystem.value.toUpperCase()
+    let visitedSystemStripped=visitedSystemString.replace(/[^0-9A-F]*/g, '')
+    console.log("input string=" + visitedSystem.value)
+    console.log("number string stripped=" + visitedSystemStripped)
+
+    let visitedSystemNumber = parseInt(visitedSystemStripped, 16)
+    numbers.push(visitedSystemNumber)
+    console.log(`decodedString=${visitedSystemString}, decodedCode=${visitedSystemNumber}`)
+
+    let div = document.createElement("div", )
+    div.id='visitedSystems'
+    let visitedSystems = document.getElementById("visitedSystems")
+
+    let h2 = document.createElement("h2")
+    h2.appendChild(document.createTextNode("Visited Systems"))
+    // 
+    let table = renderTable(numbers)
+    div.appendChild(h2)
+    div.appendChild(table)
+    if ( visitedSystems == null  ) {
+        event.target.appendChild(div)
+    }
+    else {
+        visitedSystems.replaceWith(div)
+    }
+}
+
+function submitVisitedSystemForm(event) {
+    try {
+        convertVisitedSystemNumber(event);
+    }
+    catch (error) {
+        console.log(error);
+    }
+    event.preventDefault();
+    return false;
 }

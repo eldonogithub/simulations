@@ -37,10 +37,10 @@ label {
     white-space: nowrap;
 }
 
-td {
+.form1 td {
     display: inline-block;
 }
 
-input[type="file"] {
+input[type="file"].off {
     display: none;
 }

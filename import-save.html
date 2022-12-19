@@ -6,8 +6,10 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Load Save</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='portal.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='import-save.css'>
 
+    <script src='portal.js'></script>
     <script src='import-save.js'></script>
 </head>
 
@@ -25,7 +27,11 @@
                     <td>
                         <label for="select-file-button">Choose a File:</label>
                         <button type="button" id="select-file-button">Select File</button>
-                        <input type="file" id="json-file-input">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="file" id="json-file-input" class="off">
                     </td>
                 </tr>
             </table>
