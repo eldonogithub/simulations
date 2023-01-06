@@ -1,3 +1,6 @@
+
+/* https://fonts.google.com/specimen/Space+Mono */
+
 @font-face {
     font-family: 'Space Mono';
     src: url('SpaceMono-Regular.ttf') format('truetype');
@@ -25,6 +28,8 @@
     font-weight: 700;
     font-style: italic;
 }
+
+/* https://www.reddit.com/r/NoMansSkyTheGame/comments/97w347/download_nmsglyphs_fonts_for_your_banners/ */
 
 @font-face {
     font-family: 'NMS-Glyphs-Mono';
