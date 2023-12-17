@@ -788,16 +788,23 @@
             console.log(`match[${i}]=${matches[i]}`)
         }
 
+        let planet=matches[2]
+        let systemIndex=matches[3]
+        let galaxy = matches[4]
+        let galaxyName = galaxies[parseInt(galaxy, 16)]
+        let yAxis=matches[5]
+        let zAxis=matches[6]
+        let xAxis=matches[7]
+        
         console.log(`Planet=${matches[2]}`)
         console.log(`System Index=${matches[3]}`)
-        let galaxy = galaxies[parseInt(matches[4], 16)]
-        console.log(`Galaxy=${matches[4]} ${galaxy}`)
+        console.log(`Galaxy=${matches[4]} ${galaxyName}`)
         console.log(`Y(Height)=${matches[5]}`)
         console.log(`Z(Width)=${matches[6]}`)
         console.log(`X(Length)=${matches[7]}`)
         
         let visitedSystemAddress = matches[2] + matches[3] + matches[5] + matches[6] + matches[7]
-        let galaxy = matches[4]
+        
         console.log(`VisitedSystemAddress=${visitedSystemAddress}`)
 
         let visitedSystemNumber = {
