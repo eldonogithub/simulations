@@ -796,14 +796,14 @@
         let zAxis=matches[6]
         let xAxis=matches[7]
         
-        console.log(`Planet=${matches[2]}`)
-        console.log(`System Index=${matches[3]}`)
-        console.log(`Galaxy=${matches[4]} ${galaxyName}`)
-        console.log(`Y(Height)=${matches[5]}`)
-        console.log(`Z(Width)=${matches[6]}`)
-        console.log(`X(Length)=${matches[7]}`)
+        console.log(`Planet=${planet}`)
+        console.log(`System Index=${systemIndex}`)
+        console.log(`Galaxy=${galaxy} ${galaxyName}`)
+        console.log(`Y(Height)=${yAxis}`)
+        console.log(`Z(Width)=${zAxis}`)
+        console.log(`X(Length)=${xAxis}`)
         
-        let visitedSystemAddress = matches[2] + matches[3] + matches[5] + matches[6] + matches[7]
+        let visitedSystemAddress = planet + systemIndex + yAxis + zAxis + xAxis
         
         console.log(`VisitedSystemAddress=${visitedSystemAddress}`)
 
