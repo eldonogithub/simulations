@@ -785,9 +785,17 @@
         let matches = addressStripped.match(regexp)
 
         for (let i = 0; i < matches.length; i++) {
-            console.log(`m[${i}]=${matches[i]}`)
+            console.log(`match[${i}]=${matches[i]}`)
         }
 
+        console.log(`Planet=${matches[2]}`)
+        console.log(`System Index=${matches[3]}`)
+        let galaxy = galaxies[parseInt(matches[4], 16)]
+        console.log(`Galaxy=${matches[4]} ${galaxy}`)
+        console.log(`Y(Height)=${matches[5]}`)
+        console.log(`Z(Width)=${matches[6]}`)
+        console.log(`X(Length)=${matches[7]}`)
+        
         let visitedSystemAddress = matches[2] + matches[3] + matches[5] + matches[6] + matches[7]
         let galaxy = matches[4]
         console.log(`VisitedSystemAddress=${visitedSystemAddress}`)
